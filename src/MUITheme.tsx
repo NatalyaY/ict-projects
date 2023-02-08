@@ -1,17 +1,4 @@
-import React from 'react';
-import Link, { LinkProps } from 'next/link';
 import { createTheme } from '@mui/material/styles';
-import { LinkProps as MUILinkProps } from '@mui/material/Link';
-
-
-const LinkBehavior = React.forwardRef<
-    HTMLAnchorElement,
-    LinkProps
->((props, ref) => {
-    return <Link ref={ref} {...props} />;
-});
-
-LinkBehavior.displayName = 'NextLink';
 
 declare module '@mui/material/styles' {
     interface Breakpoints {
@@ -49,29 +36,10 @@ const theme = createTheme({
         },
     },
     components: {
-        MuiLink: {
-            defaultProps: {
-                component: LinkBehavior,
-                color: 'inherit',
-                underline: 'none',
-            } as MUILinkProps,
-            styleOverrides: {
-                root: ({
-                    '&:hover': {
-                        opacity: 0.8,
-                    },
-                }),
-            },
-        },
         MuiTypography: {
             defaultProps: {
                 color: 'text.primary'
             }
-        },
-        MuiButtonBase: {
-            defaultProps: {
-                LinkComponent: LinkBehavior,
-            },
         },
     },
     typography: {
