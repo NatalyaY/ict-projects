@@ -27,21 +27,19 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     wrapperLink: {
         height: '100%',
         textDecoration: 'none',
-        wordBreak: 'keep-all',
+        boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.1)',
+        overflowWrap: 'break-word',
         transform: 'scale(1)',
         willChange: 'transform',
         transition: 'transform .2s',
         '&:hover': {
             transform: 'scale(1.01)'
         },
-        '@media (max-width:400px)': {
-            wordBreak: 'break-all',
-        }
     },
     date: {
         alignSelf: 'flex-end',
         color: '#ABABAB',
-        fontSize: '0.714rem',
+        fontSize: '0.857rem',
         fontStyle: 'italic',
     }
 }));

@@ -15,21 +15,21 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     container: {
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(248px, 1fr))',
+        gridTemplateColumns: 'repeat(4, 1fr)',
         gridRowGap: '40px',
-        gap: '70px'
-    },
-    '@media (max-width: 768px)': {
-        container: {
-            gridTemplateColumns: '1fr'
-        }
+        gap: '70px',
+        '@media (max-width: 768px)': {
+            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))'
+        },
+        '@media (max-width: 1300px)': {
+            gap: '40px',
+        },
     },
     buttonWrapper: {
         width: 'fit-content',
         padding: '10px',
         transform: 'scale(1)',
         willChange: 'transform',
-        color: theme.palette.text.accentLight,
         background:
             `linear-gradient(to right, ${theme.palette.text.accentLight} 3px, transparent 3px) 0 0,
             linear-gradient(to right,  ${theme.palette.text.accentLight} 3px, transparent 3px) 0 100%,
@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
     button: {
         padding: '16px 51px',
+        color: theme.palette.text.accentLight,
         backgroundColor: '#3B3B3B',
         transform: 'scale(1)',
         willChange: 'transform',
@@ -73,7 +74,7 @@ const Projects: React.FC<{ projects: Project[] }> = ({ projects }) => {
     }, [projects]);
 
 
-    const slicedProjects = (showAll ? projectsWithRef : projectsWithRef?.slice(0, 8 * page));
+    const slicedProjects = showAll ? projectsWithRef : projectsWithRef?.slice(0, 8 * page);
 
     const shouldBtnShow = projects.length > 8;
     const isAllProducts = projects.length == slicedProjects?.length;

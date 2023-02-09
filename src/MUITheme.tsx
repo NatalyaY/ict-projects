@@ -97,6 +97,10 @@ theme.typography = {
         ...theme.typography.body1,
         fontSize: '1rem',
     },
+    body2: {
+        ...theme.typography.body1,
+        fontSize: '0.714rem',
+    },
 };
 
 export default theme;

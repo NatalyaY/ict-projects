@@ -4,6 +4,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  line-height: 1.22 !important;
 }
 
 html,
@@ -18,25 +19,34 @@ body {
   background-color: #232323;
   font-family: 'Montserrat', sans-serif;
   overflow-x: hidden;
+  background-image: url(/waves.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: 100% auto;
 }
 
-.item-enter {
-  opacity: 0;
-}
+.item {
 
-.item-enter-active {
-  opacity: 1;
-  transition: opacity 200ms ease-in;
-}
+  &-enter {
+    opacity: 0;
 
-.item-exit {
-  opacity: 1;
-  transform: scale(1);
-  will-change: transform;
-}
+    &-active {
+      opacity: 1;
+      transition: opacity 200ms ease-in;
+    }
+  }
 
-.item-exit-active {
-  opacity: 0;
-  transform: scale(0);
-  transition: transform 600ms ease-in, opacity 200ms ease-in;
+  &-exit {
+    opacity: 1;
+    transform: scale(1);
+    will-change: transform;
+
+    &-active {
+      opacity: 0;
+      transform: scale(0);
+      transition: transform 600ms ease-in, opacity 200ms ease-in;
+    }
+  }
+
 }

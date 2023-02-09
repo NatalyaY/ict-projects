@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => {
         },
         titleContainer: {
             ...px,
-            gap: theme.spacing(10/8)
+            gap: theme.spacing(10 / 8)
         },
         charactersContainer: {
             ...px,
@@ -60,7 +60,14 @@ const useStyles = makeStyles((theme: Theme) => {
             padding: 0,
             borderRadius: 0,
             '& svg': {
-                fontSize: '27px'
+                fontSize: '27px',
+                transition: '1s',
+                willChange: 'transform'
+            },
+            '&:hover': {
+                '& svg': {
+                    transform: 'rotate(180deg)'
+                },
             }
         },
         character: {
@@ -75,7 +82,8 @@ const useStyles = makeStyles((theme: Theme) => {
             color: 'inherit',
             textTransform: 'uppercase'
         }
-    });}
+    });
+}
 );
 
 const ProjectDetails: React.FC<{ selectedProject: SelectedProject }> = ({ selectedProject }) => {
