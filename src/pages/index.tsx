@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Theme, Stack } from '@mui/material';
+import { Container, Theme, Stack, Dialog } from '@mui/material';
 import { makeStyles, createStyles } from '@mui/styles';
 
 import Head from 'next/head';
@@ -9,6 +9,7 @@ import { GetServerSideProps } from 'next';
 import data from '../../public/data.json' assert { type: 'json' };
 import Header from './../components/Header';
 import Projects from '@/components/Projects';
+import ProjectDetails from './../components/ProjectDetails/index';
 
 export type Project = typeof data['data'][number];
 export interface Category {
@@ -57,22 +58,25 @@ const Home: React.FC<IProps> = ({ projects, categories, selectedProject }) => {
             <Container disableGutters maxWidth={'xl'} className={styles.container}>
                 <Stack gap={40 / 8} className={styles.card}>
                     <Header categories={categories} qty={qty} />
-                    <Projects projects={projects}/>
+                    <Projects projects={projects} />
                 </Stack>
+                {
+                    selectedProject && <ProjectDetails selectedProject={selectedProject} />
+                }
             </Container>
         </>
     );
 };
 
 export const getServerSideProps: GetServerSideProps<IProps> = async (context) => {
-    const { cat, preview } = context.query as {cat?: string, preview?: string};
+    const { cat, preview } = context.query as { cat?: string, preview?: string };
     const selectedCategories = cat?.split(';');
 
     const projectsByCategories = data['data']
         .reduce((acc, project) => {
             acc[project.application] = [...(acc[project.application] || []), project] || [project];
             return acc;
-        }, {} as {[k: string]: Project[]});
+        }, {} as { [k: string]: Project[] });
 
     const categories = Object.entries(projectsByCategories)
         .sort((a, b) => b[1].length - a[1].length)

@@ -50,11 +50,11 @@ const ProjectCard = React.forwardRef<HTMLAnchorElement, { project: Project }>(({
     const styles = useStyles();
     const router = useRouter();
 
-    const link = { ...(router.query || {}), preview: project.id };
+    const query = { ...(router.query || {}), preview: project.id };
 
     return (
         <Stack ref={ref} minWidth='0'>
-            <Link href={{ pathname: '/', query: link }} passHref legacyBehavior>
+            <Link href={{ pathname: '/', query }} scroll={false} passHref legacyBehavior>
                 <Stack component={'a'} className={styles.wrapperLink}>
                     <Stack className={styles.card}>
                         <Stack gap={1}>

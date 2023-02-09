@@ -60,7 +60,7 @@ const Header: React.FC<{ categories: Category[], qty: number }> = ({ categories,
                         <Button
                             key={cat.name}
                             className={cat.isActive ? styles['button--active'] + ' ' + styles.button : styles.button}
-                            onClick={() => router.push(`${getCategoryParams(cat.name)}`)}
+                            onClick={() => router.push(`${getCategoryParams(cat.name)}`, undefined, {scroll: false})}
                         >
                             {cat.name}
                         </Button>
