@@ -56,7 +56,7 @@ theme.typography = {
         fontSize: '2rem',
         fontWeight: 700,
         [theme.breakpoints.up('md')]: {
-            fontSize: '2.57rem', // 32px
+            fontSize: '2.571rem', // 36px
         },
     },
     h2: {
@@ -70,17 +70,17 @@ theme.typography = {
     h3: {
         ...theme.typography.h3,
         fontWeight: 700,
-        fontSize: '1.1rem', //18px
+        fontSize: '1.1rem',
         [theme.breakpoints.up('md')]: {
-            fontSize: '1.3rem', //28px
+            fontSize: '1.285rem', //18px
         },
     },
     h4: {
         ...theme.typography.h4,
         fontWeight: 700,
-        fontSize: '1rem', //16px
+        fontSize: '1rem',
         [theme.breakpoints.up('md')]: {
-            fontSize: '1.15rem', //28px
+            fontSize: '1.143rem', //16px
         },
     },
     subtitle1: {

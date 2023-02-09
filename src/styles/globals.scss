@@ -10,13 +10,14 @@ html,
 body {
   max-width: 100vw;
   min-height: 100vh;
-  overflow-x: hidden;
   font-size: 14px;
+  min-width: 320px;
 }
 
 body {
   background-color: #232323;
   font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
 }
 
 .item-enter {
