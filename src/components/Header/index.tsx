@@ -7,6 +7,8 @@ import { makeStyles, createStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     button: {
+        flex: '1 1 auto',
+        wordBreak: 'keep-all',
         padding: '11px 10px',
         border: '1px solid',
         borderRadius: 0,
@@ -14,6 +16,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         '&:hover': {
             backgroundColor: theme.palette.text.contrast + '60'
         },
+        '@media (max-width:400px)': {
+            wordBreak: 'break-all',
+        }
     },
     ['button--active']: {
         backgroundColor: theme.palette.text.contrast,
