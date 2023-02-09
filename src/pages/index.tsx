@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Theme, Stack, Dialog } from '@mui/material';
+import { Container, Theme, Stack } from '@mui/material';
 import { makeStyles, createStyles } from '@mui/styles';
 
 import Head from 'next/head';
@@ -28,19 +28,18 @@ interface IProps {
 const useStyles = makeStyles((theme: Theme) => createStyles({
     container: {
         padding: `${theme.spacing(4)} ${theme.spacing(2)}`,
+        '@media (min-width: 1200px)': {
+            padding: `${theme.spacing(90 / 8)} ${theme.spacing(60 / 8)}`,
+        },
     },
     card: {
         backgroundColor: theme.palette.background.paper,
         borderRadius: '30px',
+        boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.1)',
         padding: `${theme.spacing(35 / 8)} ${theme.spacing(60 / 8)} ${theme.spacing(60 / 8)}`,
-        '@media (max-width:768px)': {
+        '@media (max-width:1199px)': {
             padding: `${theme.spacing(20 / 8)}`,
         }
-    },
-    '@media (min-width: 768px)': {
-        container: {
-            padding: `${theme.spacing(90 / 8)} ${theme.spacing(60 / 8)}`,
-        },
     },
 }));
 
