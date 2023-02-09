@@ -70,12 +70,18 @@ theme.typography = {
     h3: {
         ...theme.typography.h3,
         fontWeight: 700,
-        fontSize: '1.3rem', //18px
+        fontSize: '1.1rem', //18px
+        [theme.breakpoints.up('md')]: {
+            fontSize: '1.3rem', //28px
+        },
     },
     h4: {
         ...theme.typography.h4,
         fontWeight: 700,
-        fontSize: '1.15rem', //16px
+        fontSize: '1rem', //16px
+        [theme.breakpoints.up('md')]: {
+            fontSize: '1.15rem', //28px
+        },
     },
     subtitle1: {
         ...theme.typography.subtitle1,

@@ -26,12 +26,15 @@ interface IProps {
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     container: {
-        padding: theme.spacing(2),
+        padding: `${theme.spacing(4)} ${theme.spacing(2)}`,
     },
     card: {
         backgroundColor: theme.palette.background.paper,
         borderRadius: '30px',
         padding: `${theme.spacing(35 / 8)} ${theme.spacing(60 / 8)} ${theme.spacing(60 / 8)}`,
+        '@media (max-width:768px)': {
+            padding: `${theme.spacing(20 / 8)}`,
+        }
     },
     '@media (min-width: 768px)': {
         container: {

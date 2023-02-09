@@ -8,11 +8,13 @@ import Link from 'next/link';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     card: {
-        backgroundColor: theme.palette.primary.main,
-        boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.1)',
+        flex: 1,
         padding: `${theme.spacing(4)} ${theme.spacing(2)}`,
         gap: theme.spacing(28 / 8),
-        '& a': {
+        justifyContent: 'space-between',
+        backgroundColor: theme.palette.primary.main,
+        boxShadow: '0px 4px 40px rgba(0, 0, 0, 0.1)',
+        '& > p': {
             color: theme.palette.text.accent,
             textTransform: 'uppercase',
             fontWeight: 700,
@@ -23,52 +25,67 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         }
     },
     wrapperLink: {
+        height: '100%',
         textDecoration: 'none',
-        alignItems: 'flex-end',
+        wordBreak: 'keep-all',
         transform: 'scale(1)',
-        transition: '.2s',
+        willChange: 'transform',
+        transition: 'transform .2s',
         '&:hover': {
             transform: 'scale(1.01)'
+        },
+        '@media (max-width:400px)': {
+            wordBreak: 'break-all',
         }
+    },
+    date: {
+        alignSelf: 'flex-end',
+        color: '#ABABAB',
+        fontSize: '0.714rem',
+        fontStyle: 'italic',
     }
 }));
 
-const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
+const ProjectCard = React.forwardRef<HTMLAnchorElement, { project: Project }>(({ project }, ref) => {
     const styles = useStyles();
     const router = useRouter();
 
     const link = { ...(router.query || {}), preview: project.id };
 
     return (
-        <Link href={{ pathname: '/', query: link }} passHref>
-            <Stack component={'a'} className={styles.wrapperLink}>
-                <Stack className={styles.card}>
-                    <Stack gap={1}>
-                        <Typography color={'text.secondary'} variant='h4'>
-                            {
-                                project.city ?
-                                    `${project.country}, ${project.city}`
-                                    : project.country
-                            }
-                        </Typography>
-                        <Typography variant='h3'>
-                            {project.title}
+        <Stack ref={ref} minWidth='0'>
+            <Link href={{ pathname: '/', query: link }} passHref legacyBehavior>
+                <Stack component={'a'} className={styles.wrapperLink}>
+                    <Stack className={styles.card}>
+                        <Stack gap={1}>
+                            <Typography color={'text.secondary'} variant='h4'>
+                                {
+                                    project.city ?
+                                        `${project.country}, ${project.city}`
+                                        : project.country
+                                }
+                            </Typography>
+                            <Typography variant='h3'>
+                                {project.title}
+                            </Typography>
+                        </Stack>
+                        <Typography>
+                            Посмотреть
                         </Typography>
                     </Stack>
-                    <Link href={{ pathname: '/', query: link }}>
-                        Посмотреть
-                    </Link>
+                    <Typography className={styles.date}>
+                        {
+                            project.updated ?
+                                `Обновлено: ${new Date(project.updated).toLocaleDateString()}`
+                                : `Добавлено: ${new Date(project.created).toLocaleDateString()}`
+                        }
+                    </Typography>
                 </Stack>
-                <Typography color={'#ABABAB'} fontSize={'0.714rem'} fontStyle='italic'>
-                    {
-                        project.updated ?
-                            `Обновлено: ${new Date(project.updated).toLocaleDateString()}`
-                            : `Добавлено: ${new Date(project.created).toLocaleDateString()}`
-                    }
-                </Typography>
-            </Stack>
-        </Link>
+            </Link>
+        </Stack>
     );
-};
+});
+
+ProjectCard.displayName = 'ProjectCard';
 
 export default ProjectCard;
