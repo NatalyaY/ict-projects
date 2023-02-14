@@ -6,10 +6,15 @@ import {
 } from 'react-transition-group';
 
 import { Project } from '@/pages';
-import { Box, Button, Stack, Theme, useMediaQuery } from '@mui/material';
+import { Box, Button, Theme, useMediaQuery } from '@mui/material';
 
 import ProjectCard from './../ProjectCard/index';
 import { makeStyles, createStyles } from '@mui/styles';
+
+import InfiniteScroll from 'react-infinite-scroller';
+
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     container: {
@@ -57,7 +62,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         transform: 'scale(1)',
         willChange: 'transform',
         transition: '.2s',
-    }
+    },
+    loader: {
+        transform: 'rotate(0)',
+        willChange: 'transform',
+        color: theme.palette.secondary.main,
+        fontSize: '5rem',
+        animation: 'rotate 0.6s infinite linear',
+    },
 }));
 
 const Projects: React.FC<{ projects: Project[] }> = ({ projects }) => {
@@ -71,20 +83,31 @@ const Projects: React.FC<{ projects: Project[] }> = ({ projects }) => {
     useEffect(() => {
         const withRef = projects.map(p => ({ project: p, ref: React.createRef<HTMLAnchorElement>() }));
         setProjectsWithRef(withRef);
+        setShowAll(false);
+        setPage(1);
     }, [projects]);
 
 
-    const slicedProjects = showAll ? projectsWithRef : projectsWithRef?.slice(0, 8 * page);
+    const slicedProjects = projectsWithRef?.slice(0, 8 * page);
 
     const shouldBtnShow = projects.length > 8;
     const isAllProducts = projects.length == slicedProjects?.length;
 
+
+    const showMoreProjectsInfinite = () => {
+        if (!showAll) return;
+        setTimeout(() => {
+            if (!showAll) return;
+            setPage((page) => page + 10);
+        }, 500);
+    };
 
     const showMoreProjects = () => {
         if (isMobile) {
             setPage((page) => page + 1);
         } else {
             setShowAll(true);
+            setPage((page) => page + 10);
         }
     };
 
@@ -96,16 +119,15 @@ const Projects: React.FC<{ projects: Project[] }> = ({ projects }) => {
     const showMoreText = isMobile ? 'Показать еще' : 'Показать все';
 
     return (
-        <Stack gap={40 / 8} component='main' alignItems={'center'}>
-            <TransitionGroup className={styles.container}>
+        <ScrollListWrapper loadMore={showMoreProjectsInfinite} hasMore={showAll && !isAllProducts} threshold={1500}>
+            <TransitionGroup className={styles.container} exit={false}>
                 {
                     slicedProjects?.map(({ project, ref }) => {
                         return (
                             <CSSTransition
                                 key={project.id}
                                 nodeRef={ref}
-                                timeout={200}
-                                unmountOnExit
+                                timeout={300}
                                 classNames="item"
                             >
                                 <ProjectCard ref={ref} project={project} />
@@ -116,6 +138,8 @@ const Projects: React.FC<{ projects: Project[] }> = ({ projects }) => {
             </TransitionGroup>
             {
                 shouldBtnShow &&
+                (!showAll || (showAll && isAllProducts))
+                &&
                 <Box className={styles.buttonWrapper}>
                     <Button className={styles.button} onClick={isAllProducts ? collapseProjects : showMoreProjects}>
                         {
@@ -124,8 +148,34 @@ const Projects: React.FC<{ projects: Project[] }> = ({ projects }) => {
                     </Button>
                 </Box>
             }
-        </Stack >
+        </ScrollListWrapper>
     );
+};
+
+
+type IProps = { loadMore: () => void, hasMore: boolean, children: React.ReactNode, threshold?: number }
+
+const ScrollListWrapper: React.FC<IProps> = ({ children, loadMore, hasMore, threshold }) => {
+    const styles = useStyles();
+
+    return (
+        <InfiniteScroll
+            loadMore={loadMore}
+            hasMore={hasMore}
+            threshold={threshold}
+            element={'main'}
+            style={{
+                gap: '40px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+            }}
+            loader={<AutorenewIcon className={styles.loader} key={0} color={'secondary'} />}
+        >
+            {children}
+        </InfiniteScroll>
+    );
+
 };
 
 export default Projects;
