@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         backgroundColor: '#3B3B3B',
         transform: 'scale(1)',
         willChange: 'transform',
-        transition: '.2s',
+        transition: '.2s'
     },
     loader: {
         transform: 'rotate(0)',
