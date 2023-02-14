@@ -86,4 +86,4 @@ const ProjectCard = React.forwardRef<HTMLAnchorElement, { project: Project }>(({
 
 ProjectCard.displayName = 'ProjectCard';
 
-export default ProjectCard;
+export default React.memo(ProjectCard);
